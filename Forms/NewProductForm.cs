@@ -19,7 +19,7 @@ public class NewProductForm : Form
         db.Add(product);
 
 
-    }
+    }   
 
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public string Name
