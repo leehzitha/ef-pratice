@@ -1,9 +1,17 @@
+using System.Data.Common;
+using Microsoft.EntityFrameworkCore;
+
 public class ProductForm : Form
 {
     async Task<bool> IsAdm(int userId)
     {
-        // TODO
-
+        var db = await Config.InitiateAsync();
+        var query = await db.Users
+            .FirstOrDefaultAsync(u => u.ID == userId);
+        if (!query.IsAdm)
+        {
+            return false; 
+        }
         return true;
     }
 

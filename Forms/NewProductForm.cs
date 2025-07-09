@@ -1,4 +1,6 @@
 using System.ComponentModel;
+using System.Data.Common;
+using Microsoft.EntityFrameworkCore;
 
 public class NewProductForm : Form
 {
@@ -6,8 +8,17 @@ public class NewProductForm : Form
     {
         string name = Name;
         decimal price = Price;
+
+        var db = await Config.InitiateAsync();
+        var product = new ProductItem
+        {
+            Name = name,
+            Price = price
+        };
         
-        // TODO
+        db.Add(product);
+
+
     }
 
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -91,6 +102,6 @@ public class NewProductForm : Form
             }
         };
 
-        Controls.AddRange(layout);
+        Controls.Add(layout);
     }
 }

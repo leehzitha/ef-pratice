@@ -1,15 +1,33 @@
+using System.Data.Common;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
+using Microsoft.VisualBasic;
+
 public class SalesForm : Form
 {
     async Task Buy(int productId, int userId)
     {
-        // TODO
+        var db = await Config.InitiateAsync();
+        var query = new Sale
+        {
+            ProductID = productId,
+            UserDataID = userId,
+            BuyDate = DateTime.Now
+        };
+        db.Add(query);
+        await db.SaveChangesAsync();
     }
 
     async Task LoadData(int productId)
     {
         Clear();
-
-        // TODO
+        var db = await Config.InitiateAsync();
+        var query = await db.Items
+            .Include(s => s.Sales)
+            .ThenInclude(u => u.User)
+            .FirstOrDefaultAsync(s => s.ID == productId);
+        foreach (var compra in query.Sales)
+            Add(query.Name, compra.User.Username, compra.BuyDate.ToString( ));
 
         Add("bico", "trevis", "07/07/2025 10:55");
         Add("bico", "cristian", "07/07/2025 11:05");
