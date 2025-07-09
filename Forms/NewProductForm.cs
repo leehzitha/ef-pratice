@@ -15,7 +15,7 @@ public class NewProductForm : Form
             Name = name,
             Price = price
         };
-        
+         
         db.Add(product);
 
 
